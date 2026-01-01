@@ -664,21 +664,42 @@
         const successMsg = document.getElementById('successMessage');
         const closeBtn = document.getElementById('closeSuccess');
 
-        form.addEventListener('submit', (e) => {
+        form.addEventListener('submit', async (e) => {
             e.preventDefault();
-            // Simulate sending delay
             const btn = form.querySelector('button[type="submit"]');
             const originalText = btn.innerText;
             btn.innerText = 'Sending...';
             btn.disabled = true;
 
-            setTimeout(() => {
-                successMsg.classList.remove('hidden');
-                successMsg.classList.add('flex');
-                form.reset();
+            const formData = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                message: document.getElementById('message').value
+            };
+
+            try {
+                const response = await fetch('/api/contact', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                if (response.ok) {
+                    successMsg.classList.remove('hidden');
+                    successMsg.classList.add('flex');
+                    form.reset();
+                } else {
+                    alert('Something went wrong. Please try again later.');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Failed to send message. Please check your connection.');
+            } finally {
                 btn.innerText = originalText;
                 btn.disabled = false;
-            }, 1000);
+            }
         });
 
         closeBtn.addEventListener('click', () => {
