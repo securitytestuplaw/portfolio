@@ -1,8 +1,10 @@
 {
   "version": 2,
   "name": "portfolio-warda-khan",
+  "cleanUrls": true,
   "rewrites": [
     { "source": "/api/(.*)", "destination": "/api/$1" },
+    { "source": "/public/(.*)", "destination": "/public/$1" },
     { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
