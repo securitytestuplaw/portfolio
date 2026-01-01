@@ -36,6 +36,19 @@
             font-family: 'Inter', sans-serif;
         }
 
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* Extra-small phones (older/smaller Android, iPhone SE etc.) */
+        @media (max-width: 380px) {
+            .hero-title {
+                font-size: 1.9rem; /* slightly smaller than text-3xl to avoid wrapping issues */
+                line-height: 1.2;
+            }
+        }
+
         .glass-card {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
@@ -118,7 +131,7 @@
     </nav>
 
     <!-- Hero Section -->
-    <section class="relative bg-navy-900 min-h-[100dvh] flex items-center justify-center overflow-hidden pt-20 pb-10">
+    <section class="relative bg-navy-900 min-h-screen flex items-center justify-center overflow-hidden pt-24 pb-_code>
         <!-- Abstract Background Shapes -->
         <div class="absolute top-0 left-0 w-full h-full overflow-hidden opacity-20 pointer-events-none">
             <div class="absolute -top-24 -left-24 w-96 h-96 rounded-full bg-blue-600 blur-3xl"></div>
