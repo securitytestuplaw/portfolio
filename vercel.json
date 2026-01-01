@@ -1,0 +1,7 @@
+{
+  "version": 2,
+  "name": "portfolio-warda-khan",
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}
