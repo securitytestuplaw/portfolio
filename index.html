@@ -481,7 +481,7 @@
                     <h2 class="text-3xl font-bold text-white">Sample Bug Reports</h2>
                     <p class="mt-2 text-gray-400">A glimpse into how I document defects: clear, concise, and reproducible.</p>
                 </div>
-                <button class="mt-4 md:mt-0 px-4 py-2 border border-gold-500 text-gold-500 rounded hover:bg-gold-500 hover:text-navy-900 transition-colors text-sm font-bold w-full md:w-auto">
+                <button id="downloadBugLog" class="mt-4 md:mt-0 px-4 py-2 border border-gold-500 text-gold-500 rounded hover:bg-gold-500 hover:text-navy-900 transition-colors text-sm font-bold w-full md:w-auto">
                     <i class="fas fa-download mr-2"></i>Download Full Bug Log
                 </button>
             </div>
@@ -723,6 +723,256 @@
             successMsg.classList.add('hidden');
             successMsg.classList.remove('flex');
         });
+
+        // Bug log data and Excel-compatible download
+        const bugLog = [
+            {
+                id: 'BUG-001',
+                severity: 'CRITICAL',
+                summary: 'Login API returns 500 when username field is empty',
+                steps: '1. Open Login page. 2. Leave username empty. 3. Enter valid password. 4. Click Login.',
+                status: 'OPEN'
+            },
+            {
+                id: 'BUG-002',
+                severity: 'MAJOR',
+                summary: 'Forgot Password email not received for valid user',
+                steps: '1. Click "Forgot Password". 2. Enter registered email. 3. Submit and check inbox.',
+                status: 'IN PROGRESS'
+            },
+            {
+                id: 'BUG-003',
+                severity: 'MINOR',
+                summary: 'Placeholder text overlaps typed text on mobile login',
+                steps: '1. Open app on mobile. 2. Tap on username field. 3. Start typing.',
+                status: 'OPEN'
+            },
+            {
+                id: 'BUG-004',
+                severity: 'CRITICAL',
+                summary: 'App crashes when user uploads profile picture > 5MB',
+                steps: '1. Navigate to Settings > Profile. 2. Tap "Edit Photo". 3. Select image > 5MB. 4. Click "Save".',
+                status: 'FIXED'
+            },
+            {
+                id: 'BUG-005',
+                severity: 'MAJOR',
+                summary: 'Profile picture not updating after successful upload',
+                steps: '1. Upload valid picture. 2. Wait for success toast. 3. Navigate back to Dashboard.',
+                status: 'OPEN'
+            },
+            {
+                id: 'BUG-006',
+                severity: 'MINOR',
+                summary: 'Alignment issue in profile header on small screens',
+                steps: '1. Open profile page on 360x640 device. 2. Observe header content alignment.',
+                status: 'OPEN'
+            },
+            {
+                id: 'BUG-007',
+                severity: 'CRITICAL',
+                summary: 'Payment gateway returns success but order not created',
+                steps: '1. Add items to cart. 2. Proceed to checkout. 3. Complete payment. 4. Check Orders page.',
+                status: 'OPEN'
+            },
+            {
+                id: 'BUG-008',
+                severity: 'MAJOR',
+                summary: 'Duplicate order generated on slow network during payment',
+                steps: '1. Throttle network to Slow 3G. 2. Place order. 3. Observe Orders list.',
+                status: 'IN PROGRESS'
+            },
+            {
+                id: 'BUG-009',
+                severity: 'MINOR',
+                summary: 'Currency symbol missing on order summary screen',
+                steps: '1. Add item to cart. 2. Navigate to order summary. 3. Observe amount display.',
+                status: 'OPEN'
+            },
+            {
+                id: 'BUG-010',
+                severity: 'CRITICAL',
+                summary: 'Unauthorized users can access admin URL directly',
+                steps: '1. Logout from app. 2. Manually enter /admin URL. 3. Observe page access.',
+                status: 'OPEN'
+            },
+            {
+                id: 'BUG-011',
+                severity: 'MAJOR',
+                summary: 'JWT token not invalidated after logout',
+                steps: '1. Login. 2. Copy token from DevTools. 3. Logout. 4. Use token to call protected API.',
+                status: 'OPEN'
+            },
+            {
+                id: 'BUG-012',
+                severity: 'MINOR',
+                summary: 'Logout button tooltip text cut off on hover',
+                steps: '1. Hover over Logout icon in header. 2. Observe tooltip.',
+                status: 'VERIFIED'
+            },
+            {
+                id: 'BUG-013',
+                severity: 'CRITICAL',
+                summary: 'API returns sensitive error stack trace in response body',
+                steps: '1. Send malformed payload to /api/v1/register. 2. Inspect response body.',
+                status: 'OPEN'
+            },
+            {
+                id: 'BUG-014',
+                severity: 'MAJOR',
+                summary: 'Password reset token not expiring after use',
+                steps: '1. Request password reset. 2. Use token to reset password. 3. Reuse same token.',
+                status: 'IN PROGRESS'
+            },
+            {
+                id: 'BUG-015',
+                severity: 'MINOR',
+                summary: 'Inconsistent font size on Reset Password screen',
+                steps: '1. Open Reset Password screen. 2. Compare label text sizes.',
+                status: 'OPEN'
+            },
+            {
+                id: 'BUG-016',
+                severity: 'CRITICAL',
+                summary: 'Search API performance degrades with wildcard queries',
+                steps: '1. Open search bar. 2. Enter "*" or "%" as query. 3. Observe response time.',
+                status: 'OPEN'
+            },
+            {
+                id: 'BUG-017',
+                severity: 'MAJOR',
+                summary: 'Search filter returns "No Results" for valid product SKU',
+                steps: '1. Go to Inventory Dashboard. 2. Enter valid SKU "ABC-123". 3. Press Enter.',
+                status: 'OPEN'
+            },
+            {
+                id: 'BUG-018',
+                severity: 'MINOR',
+                summary: 'Search suggestions overlap header on small screens',
+                steps: '1. Open site on 375px width. 2. Type in search bar. 3. Observe suggestions dropdown.',
+                status: 'OPEN'
+            },
+            {
+                id: 'BUG-019',
+                severity: 'CRITICAL',
+                summary: 'Order total miscalculated when both coupon and tax applied',
+                steps: '1. Add product with tax. 2. Apply 20% coupon. 3. Compare expected vs displayed total.',
+                status: 'FIXED'
+            },
+            {
+                id: 'BUG-020',
+                severity: 'MAJOR',
+                summary: 'Discount applied to shipping instead of items',
+                steps: '1. Add product and shipping. 2. Apply flat discount coupon. 3. Verify calculation.',
+                status: 'OPEN'
+            },
+            {
+                id: 'BUG-021',
+                severity: 'MINOR',
+                summary: 'Rounding issue on tax amount (2 vs 3 decimal places)',
+                steps: '1. Add multiple items. 2. Check tax amount in order summary.',
+                status: 'OPEN'
+            },
+            {
+                id: 'BUG-022',
+                severity: 'CRITICAL',
+                summary: 'Push notification tap leads to blank screen',
+                steps: '1. Receive push notification. 2. Tap on notification. 3. Observe app screen.',
+                status: 'IN PROGRESS'
+            },
+            {
+                id: 'BUG-023',
+                severity: 'MAJOR',
+                summary: 'Offline data not synced when network restored',
+                steps: '1. Turn off internet. 2. Create new record. 3. Turn internet on. 4. Check backend.',
+                status: 'OPEN'
+            },
+            {
+                id: 'BUG-024',
+                severity: 'MINOR',
+                summary: 'Pull-to-refresh indicator never stops spinning',
+                steps: '1. Open list view. 2. Pull to refresh. 3. Observe spinner.',
+                status: 'OPEN'
+            },
+            {
+                id: 'BUG-025',
+                severity: 'CRITICAL',
+                summary: 'App crashes on launch on Android 14',
+                steps: '1. Install app on Android 14 device. 2. Launch app.',
+                status: 'OPEN'
+            },
+            {
+                id: 'BUG-026',
+                severity: 'MAJOR',
+                summary: 'Location permission dialog not shown on first launch',
+                steps: '1. Install app fresh. 2. Launch app. 3. Observe lack of permission prompt.',
+                status: 'IN PROGRESS'
+            },
+            {
+                id: 'BUG-027',
+                severity: 'MINOR',
+                summary: 'Typo in "Notification" settings label',
+                steps: '1. Navigate to Settings. 2. Observe spelling of "Notification".',
+                status: 'VERIFIED'
+            },
+            {
+                id: 'BUG-028',
+                severity: 'CRITICAL',
+                summary: 'Data export endpoint returns incomplete records',
+                steps: '1. Trigger data export. 2. Download file. 3. Compare record count with UI.',
+                status: 'OPEN'
+            },
+            {
+                id: 'BUG-029',
+                severity: 'MAJOR',
+                summary: 'CSV export uses semicolon instead of comma delimiter',
+                steps: '1. Export report as CSV. 2. Open file in Excel. 3. Observe delimiter.',
+                status: 'OPEN'
+            },
+            {
+                id: 'BUG-030',
+                severity: 'MINOR',
+                summary: 'Typo in "Success" modal message on Login screen',
+                steps: '1. Login with valid credentials. 2. Observe popup text "Succeess".',
+                status: 'VERIFIED'
+            }
+        ];
+
+        function downloadBugLogAsExcel() {
+            const headers = ['Bug ID', 'Severity', 'Summary', 'Steps to Reproduce', 'Status'];
+            const rows = bugLog.map(bug => [
+                bug.id,
+                bug.severity,
+                bug.summary,
+                bug.steps,
+                bug.status
+            ]);
+
+            const csvContent = [headers, ...rows]
+                .map(row => row
+                    .map(field => {
+                        const value = String(field).replace(/"/g, '""');
+                        return `"${value}"`;
+                    })
+                    .join(',')
+                )
+                .join('\r\n');
+
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'bug-log.xlsx';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+        }
+
+        const downloadBtn = document.getElementById('downloadBugLog');
+        if (downloadBtn) {
+            downloadBtn.addEventListener('click', downloadBugLogAsExcel);
+        }
     </script>
 </body>
 </html>
